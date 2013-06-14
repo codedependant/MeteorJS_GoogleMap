@@ -1,0 +1,32 @@
+<head>
+  <title>mapper</title>
+</head>
+
+<body>
+  <div class="container-fluid ">
+    <div class="row-fluid">
+      <div class="span2">
+        {{> list}}
+      </div>
+      <div class="span10">
+       {{> map}}
+      </div>
+    </div>
+
+  </div>
+</body>
+
+<template name="list">
+    <input type="text" placeholder="type some text" id="marker_text" class="input input-block-level"/>
+    <button id="marker_add" class="btn btn-block">Add Marker</button>
+    <br>
+  <ul style="list-style: none; max-height: 600px; overflow-y: scroll;">
+  {{#each positions}}
+    <li style="padding: 10px; border-bottom: 1px solid lightgray">{{text}}</li>
+  {{/each}}
+  </ul>
+</template>
+
+<template name="map">
+  <div id="map_canvas"></div>
+</template>
