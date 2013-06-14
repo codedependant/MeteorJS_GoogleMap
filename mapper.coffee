@@ -2,7 +2,7 @@ Positions = new Meteor.Collection("positions")
 map = {}
 
 if Meteor.isClient
-
+  
   Template.list.positions = ()->
     Positions.find({}, {sort: {created_at: -1}})
 
@@ -22,10 +22,8 @@ if Meteor.isClient
         latlong = new google.maps.LatLng(coords.latitude, coords.longitude)
         map.setCenter(latlong)
 
+
   Meteor.startup ->
-
-
-
     $.getScript "http://www.google.com/jsapi", ()->
         google.load 'maps', '3',
           other_params: 'sensor=false'
@@ -36,17 +34,11 @@ if Meteor.isClient
               mapTypeId: google.maps.MapTypeId.ROADMAP
             map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions)
 
-            # _.each wifi, (item)->
-            #   latlong = new google.maps.LatLng(item.Lat,item.Lng)
-            #   marker = new google.maps.Marker({position: latlong, map: map})
-
             Positions.find().observe
               added : (position)->
                 latlong = new google.maps.LatLng(position.lat,position.lng)
                 marker = new google.maps.Marker({position: latlong, map: map})
                 infowindow = new google.maps.InfoWindow
-                  content: position.text or "sdfsdfd"
-
-
+                  content: position.text or "no comment"
                 google.maps.event.addListener marker, "click", ()=>
                   infowindow.open(map, marker)
